@@ -1,0 +1,24 @@
+- name: Packages installed by AUR
+  set_fact:
+    aur_packages:
+      - "{{ google_chrome_package_name}}"
+      - "{{ spotify_package_name }}"
+      - "{{ regolith_package_name }}"
+      -
+- name: Check spotify GPG key
+  shell: gpg --list-keys | grep -q Spotify
+  register: spotify_key_exists
+
+- name: Install spotify key
+  shell: curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | gpg --import -
+  when: spotify_key_exists.rc != 0
+
+- name: Remove AUR packages
+  set_fact:
+    install_packages: "{{ install_packages | difference(aur_packages) }}"
+
+- name: Install AUR Packages
+  kewlfft.aur.aur:
+    name: "{{ aur_packages }}"
+    state: present
+  when: aur_packages

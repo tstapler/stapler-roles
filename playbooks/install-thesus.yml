@@ -1,0 +1,6 @@
+---
+- name: "Install packages for Thesus running Manjaro"
+  hosts: localhost
+  roles:
+  - development-environment
+  - desktop-apps

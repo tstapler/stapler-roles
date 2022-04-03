@@ -1,0 +1,11 @@
+- name: Packages installed by AUR
+  set_fact:
+    aur_packages:
+      - "{{ intellij_ultimate_package_name }}"
+- name: Remove AUR packages
+  set_fact:
+    install_packages: "{{ install_packages | difference(aur_packages) }}"
+- name: Install AUR Packages
+  kewlfft.aur.aur:
+    name: "{{ intellij_ultimate_package_name }}"
+    state: present

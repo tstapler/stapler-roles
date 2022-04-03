@@ -1,0 +1,7 @@
+---
+# defaults file for development-environment
+intellij_ultimate_package_name: intellij-idea-ultimate-edition
+neovim_package_name: neovim
+tmux_package_name: tmux
+docker_package_name: docker
+keychain_package_name: keychain

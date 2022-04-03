@@ -1,0 +1,28 @@
+---
+# tasks file for desktop-apps
+- include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+      - "../vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version | int}}.yml"
+      - "../vars/{{ ansible_distribution }}.yml"
+      - "../vars/{{ ansible_os_family }}.yml"
+      skip: true
+- name: Packages to Install
+  set_fact:
+    install_packages:
+      - "{{ discord_package_name }}"
+      - "{{ inkscape_package_name }}"
+      - "{{ google_chrome_package_name }}"
+      - "{{ spotify_package_name }}"
+      - "{{ regolith_package_name }}"
+- include_tasks: "{{ item }}"
+  with_first_found:
+    - files:
+        - "../tasks/{{ ansible_distribution }}-{{ ansible_distribution_major_version | int}}.yml"
+        - "../tasks/{{ ansible_distribution }}.yml"
+        - "../tasks/{{ ansible_os_family }}.yml"
+      skip: true
+- name: Install packages
+  package:
+    name: "{{ install_packages }}"
+  become: true
