@@ -4,3 +4,4 @@
   roles:
   - development-environment
   - desktop-apps
+  - shell-tools

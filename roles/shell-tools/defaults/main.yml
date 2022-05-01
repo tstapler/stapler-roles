@@ -1,0 +1,3 @@
+---
+# defaults file for shell-tools
+htop_package_name: htop

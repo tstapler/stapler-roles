@@ -1,0 +1,11 @@
+- name: Packages installed by AUR
+  set_fact:
+    aur_packages: []
+- name: Remove AUR packages from main install list
+  set_fact:
+    install_packages: "{{ install_packages | difference(aur_packages) }}"
+- name: Install AUR Packages
+  kewlfft.aur.aur:
+    name: "{{ aur_packages }}"
+    state: present
+  when: aur_packages
