@@ -1,7 +1,9 @@
 ---
 # defaults file for desktop-apps
+work_machine: false
 discord_package_name: discord
 inkscape_package_name: inkscape
 google_chrome_package_name: google-chrome
 spotify_package_name: spotify
 regolith_package_name: regolith-full
+iterm_package_name: iterm2

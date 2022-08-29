@@ -12,14 +12,25 @@
   set_fact:
     install_packages:
       - "{{ htop_package_name }}"
+      - "{{ ripgrep_package_name }}"
+      - "{{ kubectl_package_name }}"
+    work_packages:
+      - "{{ awscli_package_name }}"
+      - "{{ fluxcd_package_name }}"
+      - "{{ aws_iam_authenticator_package_name }}"
+- name: Work Packages to Install
+  set_fact:
+    install_packages: "{{ install_packages + work_packages }}"
+  when: work_machine
 - include_tasks: "{{ item }}"
   with_first_found:
     - files:
-        - "../tasks/{{ ansible_distribution }}-{{ ansible_distribution_major_version | int}}.yml"
+        - "../tasks/{{ ansible_distribution }}-{{ ansible_distribution_major_version | int }}.yml"
         - "../tasks/{{ ansible_distribution }}.yml"
         - "../tasks/{{ ansible_os_family }}.yml"
       skip: true
 - name: Install packages
   package:
     name: "{{ install_packages }}"
-  become: true
+  # Homebrew should not be run as root
+  become: "{{ 'false' if ansible_os_family == 'Darwin' else 'true' }}"

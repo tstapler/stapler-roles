@@ -1,0 +1,23 @@
+- name: Packages installed by Homebrew Cask
+  set_fact:
+    homebrew_packages:
+      - "{{ iterm_package_name }}"
+    homebrew_cask_packages:
+      - "{{ spotify_package_name }}"
+    non_work_homebrew_cask_packages:
+      - "{{ google_chrome_package_name}}"
+- name: Packages installed by Homebrew Cask
+  set_fact:
+    homebrew_cask_packages: "{{ homebrew_cask_packages + non_work_homebrew_cask_packages }}"
+  when: not work_machine
+- name: Remove AUR packages
+  set_fact:
+    install_packages: "{{ install_packages | difference(homebrew_cask_packages) | difference(homebrew_packages) }}"
+- name: Install Homebrew Packages
+  homebrew_cask:
+    name: "{{ homebrew_packages }}"
+    state: present
+- name: Install Homebrew Cask Packages
+  homebrew_cask:
+    name: "{{ homebrew_cask_packages }}"
+    state: present

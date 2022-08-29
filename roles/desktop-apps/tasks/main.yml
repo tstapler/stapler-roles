@@ -10,11 +10,15 @@
 - name: Packages to Install
   set_fact:
     install_packages:
+      - "{{ spotify_package_name }}"
+    non_work_packages:
+      - "{{ google_chrome_package_name }}"
       - "{{ discord_package_name }}"
       - "{{ inkscape_package_name }}"
-      - "{{ google_chrome_package_name }}"
-      - "{{ spotify_package_name }}"
-      - "{{ regolith_package_name }}"
+- name: Packages to install non-work
+  set_fact:
+    install_packages: "{{ install_packages + non_work_packages }}"
+  when: not work_machine
 - include_tasks: "{{ item }}"
   with_first_found:
     - files:
@@ -25,4 +29,5 @@
 - name: Install packages
   package:
     name: "{{ install_packages }}"
-  become: true
+  # Homebrew should not be run as root
+  become: "{{ 'false' if ansible_os_family == 'Darwin' else 'true' }}"

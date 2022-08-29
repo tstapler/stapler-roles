@@ -1,0 +1,10 @@
+---
+- name: "Install packages for my Fanatics Bet work Mac running OSX on an Apple M1"
+  hosts: localhost
+  become: false
+  vars:
+    work_machine: true
+  roles:
+  - development-environment
+  - desktop-apps
+  - shell-tools

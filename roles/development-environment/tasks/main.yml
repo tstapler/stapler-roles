@@ -26,4 +26,5 @@
 - name: Install packages
   package:
     name: "{{ install_packages }}"
-  become: true
+  # Homebrew should not be run as root
+  become: "{{ 'false' if ansible_os_family == 'Darwin' else 'true' }}"

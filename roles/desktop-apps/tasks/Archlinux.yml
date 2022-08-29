@@ -4,7 +4,7 @@
       - "{{ google_chrome_package_name}}"
       - "{{ spotify_package_name }}"
       - "{{ regolith_package_name }}"
-      -
+    arch_only_packages:
 - name: Check spotify GPG key
   shell: gpg --list-keys | grep -q Spotify
   register: spotify_key_exists
@@ -22,3 +22,9 @@
     name: "{{ aur_packages }}"
     state: present
   when: aur_packages
+
+- name: Install Arch Packages
+  package:
+    name: "{{ arch_only_packages }}"
+    state: present
+  when: arch_only_packages

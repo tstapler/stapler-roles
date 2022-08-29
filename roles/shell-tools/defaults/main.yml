@@ -1,3 +1,9 @@
 ---
 # defaults file for shell-tools
+work_machine: false
 htop_package_name: htop
+ripgrep_package_name: ripgrep
+fluxcd_package_name: fluxcd
+kubectl_package_name: kubectl
+aws_iam_authenticator_package_name: aws-iam-authenticator
+awscli_package_name: awscli

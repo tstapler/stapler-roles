@@ -1,0 +1,11 @@
+- name: Packages installed by Homebrew Cask
+  set_fact:
+    homebrew_cask_packages:
+      - "{{ intellij_ultimate_package_name }}"
+- name: Remove AUR packages
+  set_fact:
+    install_packages: "{{ install_packages | difference(homebrew_cask_packages) }}"
+- name: Install Homebrew Cask Packages
+  homebrew_cask:
+    name: "{{ homebrew_cask_packages }}"
+    state: present

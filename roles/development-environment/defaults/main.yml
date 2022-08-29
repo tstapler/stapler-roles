@@ -1,5 +1,6 @@
 ---
 # defaults file for development-environment
+work_machine: false
 intellij_ultimate_package_name: intellij-idea-ultimate-edition
 neovim_package_name: neovim
 tmux_package_name: tmux
