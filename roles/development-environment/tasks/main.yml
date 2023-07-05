@@ -16,6 +16,7 @@
       - "{{ tmux_package_name }}"
       - "{{ docker_package_name}}"
       - "{{ keychain_package_name }}"
+      - "{{ terraform_package_name }}"
 - include_tasks: "{{ item }}"
   with_first_found:
     - files:
@@ -28,3 +29,12 @@
     name: "{{ install_packages }}"
   # Homebrew should not be run as root
   become: "{{ 'false' if ansible_os_family == 'Darwin' else 'true' }}"
+- name: Homebrew install
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - up
+    - exa
+    - watch
+    - wget
